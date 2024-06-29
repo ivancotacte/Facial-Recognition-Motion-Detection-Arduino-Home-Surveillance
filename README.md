@@ -10,6 +10,7 @@
 - C++
 - Visual Studio Code
 - Arduino Software
+- XAMPP
 
 ## Components and Prices:
 
