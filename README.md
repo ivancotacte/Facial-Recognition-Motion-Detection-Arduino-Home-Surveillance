@@ -30,12 +30,12 @@ This project aims to design and develop a home surveillance system that leverage
 * 16x2 LCD Display I2C
 
 ## Group Members:
-- Aguio, Laurence A.
-- Bontogon, Hazel Grace N.
-- Chavez, Jay Ivan S.
-- Darantinao, Jasper M.
-- Francisco, Leonard Rgie B.
-- Melendres, Merjeneth R.
-- Parado, Mary Grace
-- Silleza, Austin B
-- Viva, Vince Lester V.
+- Laurence A. Aguio
+- Hazel Grace N. Bontogon
+- Jay Ivan S. Chavez
+- Jasper M. Darantinao
+- Leonard Rgie B. Francisco
+- Merjeneth R. Melendres
+- Mary Grace Parado
+- Austin B. Silleza
+- Vince Lester V. Viva
