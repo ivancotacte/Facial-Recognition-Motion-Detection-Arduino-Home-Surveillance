@@ -1,6 +1,8 @@
 ## Capstone Title:
 "Facial Recognition and Motion for Home Surveillance: Design and Development using Arduino and Camera"
 
+## Description:
+This project aims to design and develop a home surveillance system that leverages facial recognition and motion detection technologies. By using Arduino and a camera, the system will provide real-time monitoring and alerts, enhancing the security of residential properties. The system will detect motion, capture images, and recognize faces, triggering alarms and notifying homeowners of potential intrusions.
 
 ## Software & Programming Language
 - PHP
