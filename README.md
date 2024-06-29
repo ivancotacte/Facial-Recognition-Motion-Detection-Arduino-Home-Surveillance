@@ -13,6 +13,11 @@
 - XAMPP
 
 ## Components and Prices:
+* Arduino Uno R3 Board
+* Buzzer (For Auditory alerting)
+* LED (For Visual alerting)
+* Jumper Wire
+* BreadBoard
 
 ## Group Members:
 - Aguio, Laurence A.
