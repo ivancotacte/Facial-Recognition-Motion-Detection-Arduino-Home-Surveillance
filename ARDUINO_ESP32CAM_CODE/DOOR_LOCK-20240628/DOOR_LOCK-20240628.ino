@@ -4,8 +4,8 @@
 #include <SoftwareSerial.h>
 #include <LiquidCrystal_I2C.h>
 
-#define RXD2 12
-#define TXD2 13
+#define RXD2 13
+#define TXD2 12
 #define BUZZER 10
 #define DOOR_RELAY 11
 
@@ -48,9 +48,9 @@ unsigned long prevMillis = 0;
 const int interval = 5000;
 
 unsigned long lastInputTime = 0;
-const unsigned long inputTimeout = 15000; // 15 seconds
+const unsigned long inputTimeout = 15000; 
 
-unsigned long doorOpenDuration = 5000; // Default 5 seconds
+unsigned long doorOpenDuration = 2000; 
 
 void setup() {
   Serial.begin(115200);
@@ -78,7 +78,7 @@ void loop() {
   char key = keypad.getKey();
 
   if (millis() - lastInputTime > inputTimeout) {
-    lcd.noBacklight(); // Dim the light if there's no input for 15 seconds
+    lcd.noBacklight();
   }
 
   if (mySerial.available() > 0) {
@@ -106,7 +106,7 @@ void loop() {
 
   if (key) {
     lastInputTime = millis();
-    lcd.backlight(); // Turn on the light when there is input
+    lcd.backlight();
 
     Serial.println(key);
     tone(BUZZER, 1000, 100);
@@ -162,7 +162,9 @@ void loop() {
           lcd.setCursor(0, 0);
           lcd.print("Enter Passcode:");
           lcd.setCursor(0, 1);
-          lcd.print(input_passcode);
+          for (int i = 0; i < input_passcode.length(); i++) {
+            lcd.print('*');
+          }
         }
         break;
 
@@ -197,7 +199,9 @@ void loop() {
         } else {
           current_passcode += key;
           lcd.setCursor(0, 1);
-          lcd.print(current_passcode);
+          for (int i = 0; i < current_passcode.length(); i++) {
+            lcd.print('*');
+          }
         }
         break;
 
@@ -216,7 +220,9 @@ void loop() {
         } else {
           new_passcode += key;
           lcd.setCursor(0, 1);
-          lcd.print(new_passcode);
+          for (int i = 0; i < new_passcode.length(); i++) {
+            lcd.print('*');
+          }
         }
         break;
 
@@ -261,7 +267,9 @@ void loop() {
           lcd.print("Confirm Passcode:");
           lcd.setCursor(0, 1);
           input_passcode += key;
-          lcd.print(input_passcode);
+          for (int i = 0; i < input_passcode.length(); i++) {
+            lcd.print('*');
+          }
         }
         break;
 
@@ -279,7 +287,9 @@ void loop() {
         } else {
           input_passcode += key;
           lcd.setCursor(0, 1);
-          lcd.print(input_passcode);
+          for (int i = 0; i < input_passcode.length(); i++) {
+            lcd.print('*');
+          }
         }
         break;
     }
