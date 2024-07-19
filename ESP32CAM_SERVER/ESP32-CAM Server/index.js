@@ -1,6 +1,9 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
-const moment = require("moment-timezone");
+const uploadRoutes = require("./routes/uploadRoutes");
+const alertRoutes = require("./routes/alertRoutes");
+const bodyParser = require("body-parser");
+const path = require("path");
 const fs = require("fs");
 
 const app = express();
@@ -12,49 +15,46 @@ app.use(fileUpload({
     },
     abortOnLimit: true,
 }));
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
     console.log("Received GET request to /");
     res.send("Hello World!");
 });
 
-app.post("/upload", (req, res) => {
-    console.log("Received POST request to /upload");
-
-    if (!req.files) {
-        console.log("No files uploaded");
-        return res.sendStatus(400);
-    }
-
-    let image = req.files.image;
-
-    if (!image) {
-        console.log("No image submitted");
-        return res.sendStatus(400);
-    }
-
-    if (!/^image/.test(image.mimetype)) {
-        console.log("Invalid image mimetype:", image.mimetype);
-        return res.sendStatus(400);
-    }
-
-    image.name = moment().tz("Asia/Manila").format('YYYY-MM-DD_hh-mm-ssA') + "_" + image.name;
-
-    if (!fs.existsSync("./images")) {
-        fs.mkdirSync("./images");
-    }
-
-    const imagePath = "./images/" + image.name;
-    image.mv(imagePath, (err) => {
+app.get("/gallery", (req, res) => {
+    const imagesDir = path.join(__dirname, "images");
+    fs.readdir(imagesDir, (err, files) => {
         if (err) {
-            console.log("Error uploading image:", err);
-            return res.sendStatus(500);
+            console.log("Error reading images directory:", err);
+            return res.status(500).send("Error reading images directory");
         }
 
-        console.log("Image uploaded successfully:", image.name);
-        res.sendStatus(200);
+        const fileStats = files.map(file => {
+            const filePath = path.join(imagesDir, file);
+            const stats = fs.statSync(filePath);
+            return {
+                file,
+                createdAt: stats.birthtime
+            };
+        });
+
+        fileStats.sort((a, b) => b.createdAt - a.createdAt);
+        const sortedFiles = fileStats.map(stat => stat.file);
+
+        res.render("gallery", { images: sortedFiles });
     });
 });
+
+app.use("/", uploadRoutes);
+app.use("/", alertRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);

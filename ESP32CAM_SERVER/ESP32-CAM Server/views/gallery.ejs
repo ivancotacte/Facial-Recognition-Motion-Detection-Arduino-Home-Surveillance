@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    h1 {
+        margin: 20px 0;
+    }
+
+    .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .gallery-item {
+        margin: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    .gallery-item img {
+        max-width: 200px;
+        height: auto;
+    }
+</style>
+<body>
+    <h1>Image Gallery</h1>
+    <div class="gallery">
+        <% images.forEach(image => { %>
+            <div class="gallery-item">
+                <img src="/images/<%= image %>" alt="<%= image %>">
+                <p><%= image %></p>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>

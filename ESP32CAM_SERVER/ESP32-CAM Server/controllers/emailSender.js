@@ -1,4 +1,10 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
+const moment = require("moment-timezone");
+
+const emailAddress = [
+    "cotactearmenion@gmail.com", 
+];
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -13,47 +19,53 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-async function sendEmail(alertType, doorStatus = null) {
-    const emailAddress = [
-        "cotactearmenion@gmail.com", 
-        "jonhdarryld@gmail.com",
-        "dominic.loreno0@gmail.com",
-        "anjeloasuncion@gmail.com",
-        "leernadsadasop@gmail.com"
-    ];
-
+async function sendTextAlert(alertType, alertMessage) {
     try {
-        let alertMessage;
-        if (alertType === "door") {
-            alertMessage = `Alert: The door has been ${doorStatus}`;
-        } else if (alertType === "intruder") {
-            alertMessage = "Alert: Possible intruder detected due to multiple failed attempts to unlock the door.";
-        } else if (alertType === "someoneChangepasscode") {
-            alertMessage = "Alert: Someone has changing the passcode.";
-        } else if (alertType === "successChangepasscode") {
-            alertMessage = "Alert: Passcode has been successfully changed.";
-        }
+        let currentTime = moment().tz("Asia/Manila").format('YYYY-MM-DD HH:mm:ss');
+        alertMessage += `\n\nTime: ${currentTime}`;
+        
+        const mailOptions = {
+            from: '"GROUP 10 - LFSA322N002 👻" <cotactearmenion@gmail.com>',
+            to: emailAddress,
+            subject: alertType,
+            text: alertMessage,
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error("Error: ", error);
+            } else {
+                console.log("Success: ", info.response);
+            }
+        });
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+}
 
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleDateString();
-        const formattedTime = currentDate.toLocaleTimeString();
+async function sendEmailImage(alertType, imagePath) {
+    try {
+        let alertMessage = "";
+        let customMessage = "";
+        let currentTime = moment().tz("Asia/Manila").format('YYYY-MM-DD HH:mm:ss');
+
+        switch (alertType) {
+            case "intruderFace":
+                alertMessage = "ESP32CAM: Intruder Detected";
+                customMessage = `An intruder was detected by the ESP32CAM system at ${currentTime}. Please find the attached image for more details.`;
+                break;
+        }
 
         const mailOptions = {
             from: '"GROUP 10 - LFSA322N002 👻" <cotactearmenion@gmail.com>',
             to: emailAddress,
             subject: alertMessage,
-            html: `
-                <html>
-                    <head>
-                        <title>Alert</title>
-                    </head>
-                    <body>
-                        <p>${alertMessage}</p>
-                        <p>Date: ${formattedDate}</p>
-                        <p>Time: ${formattedTime}</p>
-                    </body>
-                </html>
-            `,
+            text: customMessage,
+            attachments: [
+                {
+                    filename: imagePath.split("/").pop(),
+                    path: imagePath
+                }
+            ]
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -68,4 +80,4 @@ async function sendEmail(alertType, doorStatus = null) {
     }
 }
 
-module.exports = { sendEmail };
+module.exports = { sendEmailImage, sendTextAlert };

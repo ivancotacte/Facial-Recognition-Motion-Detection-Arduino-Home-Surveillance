@@ -5,14 +5,11 @@
 This project aims to design and develop a home surveillance system that leverages facial recognition and motion detection technologies. By using Arduino and a camera, the system will provide real-time monitoring and alerts, enhancing the security of residential properties. The system will detect motion, capture images, and recognize faces, triggering alarms and notifying homeowners of potential intrusions.
 
 ## Software & Programming Language
-- PHP
-- HTML
-- Javascript
-- CSS
+- HTML / CSS
+- NodeJS
 - C++
 - Visual Studio Code
-- Arduino Software
-- XAMPP
+- Arduino IDE
 
 ## Components and Prices:
 * Arduino Uno R3 Board
@@ -28,6 +25,7 @@ This project aims to design and develop a home surveillance system that leverage
 * 18650 Cell Battery Holder Case
 * Lithium-ion 18650 Battery 3.7V
 * 16x2 LCD Display I2C
+* MT3608 2A Max DC-DC Step Up Booster Power Module
 
 ## Group Members:
 - Laurence A. Aguio
