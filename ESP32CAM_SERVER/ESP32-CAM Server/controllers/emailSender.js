@@ -3,7 +3,9 @@ require("dotenv").config();
 const moment = require("moment-timezone");
 
 const emailAddress = [
-    "cotactearmenion@gmail.com", 
+    "cotactearmenion@gmail.com",
+    "laurenceaguio08@gmail.com",
+    "merjenethmelendres@gmail.com"
 ];
 
 const transporter = nodemailer.createTransport({
@@ -56,7 +58,7 @@ async function sendEmailImage(alertType, imagePath) {
         }
 
         const mailOptions = {
-            from: '"GROUP 10 - LFSA322N002 👻" <cotactearmenion@gmail.com>',
+            from: '"GROUP 1 - LFSA322N002 👻" <merjenethmelendres@gmail.com>',
             to: emailAddress,
             subject: alertMessage,
             text: customMessage,
